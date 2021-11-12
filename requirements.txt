@@ -1,0 +1,5 @@
+fastapi[all]
+psycopg2-binary
+sqlalchemy
+pydantic
+python-jose[cryptography]
