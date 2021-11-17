@@ -1,0 +1,9 @@
+APP_NAME: "FastAPI-Demo"
+API_HEADER_PASSWORD: ""
+POSTGRESQL_SETTINGS:
+  HOST: "localhost"
+  PORT: "5432"
+  USERNAME: "postgres"
+  PASSWORD: "fastapi"
+  DATABASE: "fast_api_demo"
+
