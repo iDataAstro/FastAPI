@@ -1,15 +1,23 @@
-from fastapi.security import OAuth2PasswordBearer
-from fastapi import Depends, HTTPException, status
-from jose import JWTError, jwt
 from datetime import datetime, timedelta
-from . import schemas
+
+from fastapi import Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
+from jose import JWTError, jwt
+
+from . import schemas, models
+from .config import config
+from .database import get_db
+from sqlalchemy.orm import Session
 
 
-# to get a string like this run:
+auth2_config: dict = config.dict()["AUTH2_SETTINGS"]
+
+
+# to get a SECRET_KEY string like this run:
 # openssl rand -hex 32
-SECRET_KEY = "b6f86a1ebc8beb34f36edec1c1ef5468c56d41e781ac9242fa52796e7fa372f8"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60
+SECRET_KEY = auth2_config["SECRET_KEY"]
+ALGORITHM = auth2_config["ALGORITHM"]
+ACCESS_TOKEN_EXPIRE_MINUTES = auth2_config["ACCESS_TOKEN_EXPIRE_MINUTES"]
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 
@@ -33,8 +41,12 @@ def verify_access_token(token: str, credentials_exception):
     return token_data
 
 
-def get_current_user(token: str = Depends(oauth2_scheme)):
+def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     credentials_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                                           detail="Could not validate credentials",
                                           headers={"WWW-Authenticate": "Bearer"})
-    return verify_access_token(token, credentials_exception)
+
+    token = verify_access_token(token, credentials_exception)
+    user = db.query(models.User).filter(models.User.id == token.id).first()
+
+    return user
