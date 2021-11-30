@@ -3,10 +3,10 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from .config import config
 
-pg_config: dict = config.dict()["POSTGRESQL_SETTINGS"]
+pg_cfg: dict = config.dict()["POSTGRESQL_SETTINGS"]
 
 # SQLALCHEMY_DATABASE_URL = "postgresql://<user>:<password>@<server-ip>:<port>/<db-name>"
-SQLALCHEMY_DATABASE_URL = "postgresql://"+pg_config["USERNAME"]+":"+pg_config["PASSWORD"]+"@"+pg_config["HOST"]+"/"+pg_config["DATABASE"]+""
+SQLALCHEMY_DATABASE_URL = f"postgresql://{pg_cfg['USERNAME']}:{pg_cfg['PASSWORD']}@{pg_cfg['HOST']}/{pg_cfg['DATABASE']}"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
