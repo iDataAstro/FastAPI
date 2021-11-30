@@ -49,5 +49,5 @@ if os.environ["CURRENT_ENV"] == "PROD":
     cfgtoml["AUTH2_SETTINGS"]["ACCESS_TOKEN_EXPIRE_MINUTES"] = os.environ["AUTH2_SETTINGS_ACCESS_TOKEN_EXPIRE_MINUTES"]
 
     with open("config_prod.toml", "w") as f:
-        toml.dump(cfgtoml, f, sort_keys=False)
+        toml.dump(cfgtoml, f)
     config = Config.parse_obj(toml.load("config_prod.toml"))
