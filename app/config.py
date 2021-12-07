@@ -30,7 +30,7 @@ class Config(BaseModel):
 # with open("app/config.yaml") as config_file:
 #     config = Config.parse_obj(yaml.safe_load(config_file))
 config = Config.parse_obj(toml.load("config.toml"))
-if os.environ["CURRENT_ENV"] == "PROD":
+if os.environ["CURRENT_ENV"] != "DEV":
     cfgtoml = {}
 
     cfgtoml["APP_NAME"] = os.environ["APP_NAME"]
@@ -48,6 +48,7 @@ if os.environ["CURRENT_ENV"] == "PROD":
     cfgtoml["AUTH2_SETTINGS"]["ALGORITHM"] = os.environ["AUTH2_SETTINGS_ALGORITHM"]
     cfgtoml["AUTH2_SETTINGS"]["ACCESS_TOKEN_EXPIRE_MINUTES"] = os.environ["AUTH2_SETTINGS_ACCESS_TOKEN_EXPIRE_MINUTES"]
 
-    with open("config_prod.toml", "w") as f:
+    config_file = f"config_{os.environ['CURRENT_ENV']}.toml"
+    with open(config_file, "w") as f:
         toml.dump(cfgtoml, f)
-    config = Config.parse_obj(toml.load("config_prod.toml"))
+    config = Config.parse_obj(toml.load(config_file))

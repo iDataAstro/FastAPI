@@ -12,7 +12,7 @@ from .routers import posts, users, votes, auth
 ## Using alembic with "--autogenerate" flag we don't need SqlAlchemy
 ## to auto create tables as we handle it will alembic.'
 # Creating all tables defined in models
-# models.Base.metadata.create_all(bind=engine)
+models.Base.metadata.create_all(bind=engine)
 
 
 app = FastAPI()
