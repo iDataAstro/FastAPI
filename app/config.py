@@ -30,7 +30,7 @@ class Config(BaseModel):
 # with open("app/config.yaml") as config_file:
 #     config = Config.parse_obj(yaml.safe_load(config_file))
 config = Config.parse_obj(toml.load("config.toml"))
-if os.environ["CURRENT_ENV"] != "DEV":
+if os.environ.get("CURRENT_ENV", "DEV") != "DEV":
     cfgtoml = {}
 
     cfgtoml["APP_NAME"] = os.environ["APP_NAME"]

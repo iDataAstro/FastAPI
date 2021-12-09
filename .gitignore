@@ -136,3 +136,4 @@ dmypy.json
 
 # Loval BaseSettings file
 .local_env_file
+.pytest_cache

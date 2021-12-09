@@ -157,7 +157,8 @@ useradd jatin
 cd /home/jatin
 mkdir app
 cd app
-git clone <GIT-URL> . # PUT DOT TO CREATE IN CURRENT DIRECTORY
+# PUT DOT TO CREATE IN CURRENT DIRECTORY
+git clone <GIT-URL> . 
 ```
 7. Install miniconda or virtualenv to create environment and install dependencies
 ```bash
@@ -315,7 +316,7 @@ volumes:
   postgres-db:
 ```
 
-    * To start/stop docker-compose
+  * To start/stop docker-compose
 ```bash
 # to start docker-compose
 docker compose up -d 
@@ -331,12 +332,11 @@ docker compose down
 # to stop with file name
 docker compose -f docker-compose.yaml down
 ```
-
-    * To check logs of docker-compose 
+  * To check logs of docker-compose 
 ```bash
 docker logs fastapi_api_1 #image name
 ```
-    * To interact with docker images
+  * To interact with docker images
 ```bash
 docker exec -it fastapi_api_1 bash
 ```
